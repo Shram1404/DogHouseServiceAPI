@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace DogHouseServiceAPI.Models
 {
@@ -20,6 +20,5 @@ namespace DogHouseServiceAPI.Models
         [Required(ErrorMessage = "Dog must have Weight")]
         [Range(0, 500, ErrorMessage = "Wrong Weight (0-500)")]
         public float Weight { get; set; } = 0.1f;
-
     }
 }

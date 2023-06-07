@@ -1,4 +1,4 @@
-﻿using DogHouseServiceAPI.Dto;
+using DogHouseServiceAPI.Dto;
 using DogHouseServiceAPI.Models;
 
 namespace DogHouseServiceAPI.Services
@@ -8,5 +8,4 @@ namespace DogHouseServiceAPI.Services
         IEnumerable<Dog> GetDogs(DogsGetRequest request);
         Task AddDogAsync(Dog dog);
     }
-
 }
