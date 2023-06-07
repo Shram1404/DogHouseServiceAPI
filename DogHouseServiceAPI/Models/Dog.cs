@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace DogHouseServiceAPI.Models
 {
@@ -14,12 +14,11 @@ namespace DogHouseServiceAPI.Models
         public string Color { get; set; } = null!;
 
         [Required(ErrorMessage = "Dog must have Tail Length")]
-        [Range(0, 500, ErrorMessage = "Wrong Tail Length (0-500)")]
-        public float TailLength { get; set; } = 0.1f;
+        [Range(0.01, 500, ErrorMessage = "Wrong Tail Length (0-500)")]
+        public float TailLength { get; set; } = 0;
 
+        [Range(0.01, 500, ErrorMessage = "Wrong Weight (0-500)")]
         [Required(ErrorMessage = "Dog must have Weight")]
-        [Range(0, 500, ErrorMessage = "Wrong Weight (0-500)")]
-        public float Weight { get; set; } = 0.1f;
-
+        public float Weight { get; set; } = 0;
     }
 }

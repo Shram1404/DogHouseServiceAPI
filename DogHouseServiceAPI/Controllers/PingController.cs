@@ -1,10 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 
 namespace DogHouseServiceAPI.Controllers
 {
     public class PingController : Controller
     {
+        private readonly IConfiguration _configuration;
+        public PingController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [HttpGet("Ping")]
-        public IActionResult Index() => Ok("Dogs house service. Version 1.0.1");//додати глобально в проект
+        public IActionResult Ping() =>
+            Ok("Dogs house service. Version " + _configuration.GetValue<string>("ApiVersion"));
     }
 }

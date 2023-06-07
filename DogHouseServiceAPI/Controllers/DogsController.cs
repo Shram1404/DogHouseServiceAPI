@@ -7,23 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 namespace DogHouseServiceAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class DogsController : Controller
     {
-        private readonly DogHouseServiceAPIContext _context;
         private readonly IDogService _dogService;
 
         public DogsController(DogHouseServiceAPIContext context, IDogService dogService)
         {
-            _context = context;
             _dogService = dogService;
         }
+
+        [HttpGet]
+        public IActionResult Index() =>
+            Ok("Lol");
 
         // GET: Dogs
         [HttpGet("Dogs")]
         public Task<IActionResult> GetDogs([FromQuery] DogsGetRequest request)
         {
             var dog = _dogService.GetDogs(request);
+
+            if (dog == null)
+                return Task.FromResult<IActionResult>(NotFound());
+
             return Task.FromResult<IActionResult>(Json(dog));
         }
 

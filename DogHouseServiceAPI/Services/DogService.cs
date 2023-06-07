@@ -43,15 +43,15 @@ namespace DogHouseServiceAPI.Services
             }
 
             var pagedDogs = dogs.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize);
+            if(pagedDogs.Count() != 0)
+                return pagedDogs;
 
-            return pagedDogs;
+            return null;
         }
         public async Task AddDogAsync(Dog dog)
         {
             _context.Dog.Add(dog);
             await _context.SaveChangesAsync();
         }
-
     }
-
 }
