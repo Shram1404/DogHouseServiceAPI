@@ -12,7 +12,7 @@ namespace DogHouseServiceAPI.Services
         {
             _context = context;
         }
-        public IEnumerable<Dog> GetDogs(DogsGetRequest request)
+        public IEnumerable<Dog>? GetDogs(DogsGetRequest request)
         {
             var dogs = _context.Dog.AsQueryable();
 
