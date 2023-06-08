@@ -11,8 +11,9 @@ namespace DogHouseServiceAPI.Controllers
             _configuration = configuration;
         }
 
+        // GET: Ping
         [HttpGet("Ping")]
-        public IActionResult Ping() =>
+        public IActionResult Ping() => // Version contains in appsettings.json
             Ok("Dogs house service. Version " + _configuration.GetValue<string>("ApiVersion"));
     }
 }

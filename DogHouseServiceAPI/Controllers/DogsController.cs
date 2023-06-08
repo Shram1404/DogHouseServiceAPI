@@ -18,7 +18,7 @@ namespace DogHouseServiceAPI.Controllers
 
         // GET: Dogs
         [HttpGet("Dogs")]
-        public Task<IActionResult> GetDogs([FromQuery] DogsGetRequest request)
+        public Task<IActionResult> GetDogs([FromQuery] DogsGetRequest request) // DogsGetRequest from Dto folder
         {
             var dog = _dogService.GetDogs(request);
 
@@ -37,7 +37,7 @@ namespace DogHouseServiceAPI.Controllers
 
             await _dogService.AddDogAsync(dog);
             return CreatedAtAction("GetDog", dog);
-        }   
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace DogHouseServiceAPI.Dto
 {
+    // Parameter object for the GetDogs method in the DogsController class
     public class DogsGetRequest
     {
         public string? Attribute { get; set; }

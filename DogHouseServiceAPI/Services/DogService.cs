@@ -4,6 +4,7 @@ using DogHouseServiceAPI.Dto;
 
 namespace DogHouseServiceAPI.Services
 {
+    // Service for organizing a list of dogs
     public class DogService : IDogService
     {
         private readonly DogHouseServiceAPIContext _context;
@@ -12,13 +13,16 @@ namespace DogHouseServiceAPI.Services
         {
             _context = context;
         }
+
+        // Retrieve a list of dogs for the given request
         public IEnumerable<Dog>? GetDogs(DogsGetRequest request)
         {
             var dogs = _context.Dog.AsQueryable();
 
+            // If request contains an attribute, sort accordingly
             if (!string.IsNullOrEmpty(request.Attribute))
             {
-                if (request.Order == "desc")
+                if (request.Order == "desc") // Sort descending
                 {
                     dogs = request.Attribute switch
                     {
@@ -29,7 +33,7 @@ namespace DogHouseServiceAPI.Services
                         _ => dogs
                     };
                 }
-                else
+                else // Sort ascending
                 {
                     dogs = request.Attribute switch
                     {
@@ -42,12 +46,15 @@ namespace DogHouseServiceAPI.Services
                 }
             }
 
+            // Paginate and return dogs
             var pagedDogs = dogs.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize);
-            if(pagedDogs.Count() != 0)
+            if (pagedDogs.Count() != 0)
                 return pagedDogs;
 
             return null;
         }
+
+        // Add a dog to the database asynchronously
         public async Task AddDogAsync(Dog dog)
         {
             _context.Dog.Add(dog);
