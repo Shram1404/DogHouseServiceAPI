@@ -8,8 +8,10 @@ namespace DogHouseServiceAPI.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Dog must have Name")]
+        [MaxLength(100, ErrorMessage = "Name is to long (Max 100)")]
         public string Name { get; set; } = null!;
 
+        [MaxLength(100, ErrorMessage = "Color is to long (Max 100)")]
         [Required(ErrorMessage = "Dog must have Color")]
         public string Color { get; set; } = null!;
 

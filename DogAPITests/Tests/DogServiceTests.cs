@@ -11,12 +11,18 @@ using Xunit;
 
 namespace DogHouseServiceAPI.Tests
 {
+    /// <summary>
+    /// Test class for the DogService class
+    /// </summary>
     public class DogServiceTests
     {
         private List<Dog> _dogs;
         private Mock<DbSet<Dog>> _mockSet;
         private Mock<DogHouseServiceAPIContext> _mockContext;
 
+        /// <summary>
+        /// Initializes the test class
+        /// </summary>
         public DogServiceTests()
         {
             _dogs = new List<Dog>
@@ -25,7 +31,7 @@ namespace DogHouseServiceAPI.Tests
                 new Dog { Name = "Dog 2", Color = "White", TailLength = 5},
                 new Dog { Name = "Dog 3", Color = "Gray", TailLength = 5},
             };
-
+            // Setting up the mock DbSet
             _mockSet = new Mock<DbSet<Dog>>();
             _mockSet.As<IQueryable<Dog>>().Setup(m => m.Provider).Returns(_dogs.AsQueryable().Provider);
             _mockSet.As<IQueryable<Dog>>().Setup(m => m.Expression).Returns(_dogs.AsQueryable().Expression);
@@ -38,6 +44,9 @@ namespace DogHouseServiceAPI.Tests
             _mockContext.Setup(c => c.Dog).Returns(_mockSet.Object);
         }
 
+        /// <summary>
+        /// Tests that the GetDogs method returns null when no dogs are found
+        /// </summary>
         [Fact]
         public void GetDogs_ReturnsNull_WhenNoDogsFound()
         {
@@ -52,7 +61,9 @@ namespace DogHouseServiceAPI.Tests
             Assert.Null(result);
         }
 
-
+        /// <summary>
+        /// Tests that the GetDogs method returns filtered dogs when dogs are found
+        /// </summary>
         [Fact]
         public void GetDogs_ReturnsFilteredDogs_WhenDogsFound()
         {
@@ -71,6 +82,9 @@ namespace DogHouseServiceAPI.Tests
             Assert.Equal("Gray", resultList.Last().Color);
         }
 
+        /// <summary>
+        /// Tests that the AddDogAsync method adds a new dog to the Dog list
+        /// </summary>
         [Fact]
         public async Task AddDogAsync_AddsNewDog()
         {

@@ -11,14 +11,14 @@
         _limit = limit;
     }
     /// <summary>
-    /// Middleware to limit the number of requests per second.
+    /// Middleware to limit the number of requests per time frame.
     /// </summary>
     /// <param name="context">The HTTP context.</param>
     public async Task Invoke(HttpContext context)
     {
         var currentTime = DateTime.Now;
 
-        if (currentTime - _lastRequestTime >= TimeSpan.FromSeconds(1)) // 1 second time frame
+        if (currentTime - _lastRequestTime >= TimeSpan.FromSeconds(1)) // Set 1 second for time frame
         {
             // Reset the request count if the time frame has elapsed
             _requestCount = 1;

@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DogHouseService.Migrations
+namespace DogHouseServiceAPI.Migrations
 {
     [DbContext(typeof(DogHouseServiceAPIContext))]
-    [Migration("20230607182934_InitialCreate")]
+    [Migration("20230608151150_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,7 +24,7 @@ namespace DogHouseService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DogHouseService.Models.Dog", b =>
+            modelBuilder.Entity("DogHouseServiceAPI.Models.Dog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

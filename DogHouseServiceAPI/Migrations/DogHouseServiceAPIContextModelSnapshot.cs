@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DogHouseService.Migrations
+namespace DogHouseServiceAPI.Migrations
 {
     [DbContext(typeof(DogHouseServiceAPIContext))]
-    partial class DogHouseServiceContextModelSnapshot : ModelSnapshot
+    partial class DogHouseServiceAPIContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace DogHouseService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DogHouseService.Models.Dog", b =>
+            modelBuilder.Entity("DogHouseServiceAPI.Models.Dog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,11 +31,11 @@ namespace DogHouseService.Migrations
 
                     b.Property<string>("Color")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<float>("TailLength")
                         .HasColumnType("real");
@@ -44,9 +44,6 @@ namespace DogHouseService.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
 
                     b.ToTable("Dog");
                 });
