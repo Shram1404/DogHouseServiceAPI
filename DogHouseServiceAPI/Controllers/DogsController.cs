@@ -16,10 +16,6 @@ namespace DogHouseServiceAPI.Controllers
             _dogService = dogService;
         }
 
-        [HttpGet]
-        public IActionResult Index() =>
-            Ok("Lol");
-
         // GET: Dogs
         [HttpGet("Dogs")]
         public Task<IActionResult> GetDogs([FromQuery] DogsGetRequest request)

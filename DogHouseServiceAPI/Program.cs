@@ -1,10 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using DogHouseServiceAPI.Data;
 using DogHouseServiceAPI.Services;
-using DogHouseServiceAPI;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +14,7 @@ string version = (string?)builder.Configuration.GetValue(typeof(string), key: "A
 builder.Services.AddDbContext<DogHouseServiceAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DogHouseServiceAPIContext") ?? throw new InvalidOperationException("Connection string 'DogHouseServiceAPIContext' not found.")));
 
-// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
@@ -40,12 +35,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Dogs}/{action=Index}/{id?}");
+
 app.UseAuthorization();
 app.UseMiddleware<RequestLimitMiddleware>(requestLimit);
-
 app.MapControllers();
 
 app.Run();

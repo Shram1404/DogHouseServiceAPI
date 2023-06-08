@@ -20,11 +20,5 @@ namespace DogHouseServiceAPI.Models
         [Range(0.01, 500, ErrorMessage = "Wrong Weight (0-500)")]
         [Required(ErrorMessage = "Dog must have Weight")]
         public float Weight { get; set; } = 0;
-
-
-
-
-
-
     }
 }
