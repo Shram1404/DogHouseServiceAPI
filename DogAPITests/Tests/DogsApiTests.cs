@@ -57,7 +57,7 @@ namespace DogHouseServiceAPI.Tests
             var request = new DogsGetRequest();
 
             Dog dog = new Dog();
-            dog.Name = "Test Dog";
+            dog.Name = "Test DogTest Dog";
             dog.Weight = 10;
             dog.Color = "Brown";
             dog.TailLength = 5;

@@ -22,33 +22,20 @@ namespace DogHouseServiceAPI.Services
             // If request contains an attribute, sort accordingly
             if (!string.IsNullOrEmpty(request.Attribute))
             {
-                if (request.Order == "desc") // Sort descending
+                var descending = request.Order == "desc";
+                dogs = request.Attribute switch
                 {
-                    dogs = request.Attribute switch
-                    {
-                        "name" => dogs.OrderByDescending(d => d.Name),
-                        "color" => dogs.OrderByDescending(d => d.Color),
-                        "tail_length" => dogs.OrderByDescending(d => d.TailLength),
-                        "weight" => dogs.OrderByDescending(d => d.Weight),
-                        _ => dogs
-                    };
-                }
-                else // Sort ascending
-                {
-                    dogs = request.Attribute switch
-                    {
-                        "name" => dogs.OrderBy(d => d.Name),
-                        "color" => dogs.OrderBy(d => d.Color),
-                        "tail_length" => dogs.OrderBy(d => d.TailLength),
-                        "weight" => dogs.OrderBy(d => d.Weight),
-                        _ => dogs
-                    };
-                }
+                    "name" => descending ? dogs.OrderByDescending(d => d.Name) : dogs.OrderBy(d => d.Name),
+                    "color" => descending ? dogs.OrderByDescending(d => d.Color) : dogs.OrderBy(d => d.Color),
+                    "tail_length" => descending ? dogs.OrderByDescending(d => d.TailLength) : dogs.OrderBy(d => d.TailLength),
+                    "weight" => descending ? dogs.OrderByDescending(d => d.Weight) : dogs.OrderBy(d => d.Weight),
+                    _ => dogs
+                };
             }
 
             // Paginate and return dogs
             var pagedDogs = dogs.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize);
-            if (pagedDogs.Count() != 0)
+            if (pagedDogs.Count() > 0)
                 return pagedDogs;
 
             return null;
