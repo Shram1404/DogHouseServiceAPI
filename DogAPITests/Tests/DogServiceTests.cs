@@ -4,10 +4,6 @@ using DogHouseServiceAPI.Models;
 using DogHouseServiceAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace DogHouseServiceAPI.Tests
 {
@@ -16,9 +12,9 @@ namespace DogHouseServiceAPI.Tests
     /// </summary>
     public class DogServiceTests
     {
-        private List<Dog> _dogs;
-        private Mock<DbSet<Dog>> _mockSet;
-        private Mock<DogHouseServiceAPIContext> _mockContext;
+        private readonly List<Dog> _dogs;
+        private readonly Mock<DbSet<Dog>> _mockSet;
+        private readonly Mock<DogHouseServiceAPIContext> _mockContext;
 
         /// <summary>
         /// Initializes the test class

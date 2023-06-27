@@ -1,4 +1,6 @@
-﻿public class RequestLimitMiddleware
+﻿namespace DogHouseServiceAPI.Middleware;
+
+public class RequestLimitMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly int _limit;

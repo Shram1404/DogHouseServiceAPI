@@ -1,4 +1,5 @@
 using DogHouseServiceAPI.Data;
+using DogHouseServiceAPI.Middleware;
 using DogHouseServiceAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -11,11 +12,12 @@ if (!int.TryParse(requestLimitString, out int requestLimit))
     throw new ArgumentException("RequestLimitCount needs to be a valid integer.");
 
 // Retrieve the API version from appsettings.json
-string version = (string?)builder.Configuration.GetValue(typeof(string), key: "ApiVersion") ?? throw new ArgumentNullException("ApiVersion is incorrect");
+string? version = builder.Configuration.GetValue<string?>("ApiVersion") ?? throw new ArgumentNullException(nameof(version));
 
 // Add services to the container
 builder.Services.AddDbContext<DogHouseServiceAPIContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DogHouseServiceAPIContext") ?? throw new InvalidOperationException("Connection string 'DogHouseServiceAPIContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DogHouseServiceAPIContext")
+                         ?? throw new InvalidOperationException("Connection string 'DogHouseServiceAPIContext' not found.")));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 

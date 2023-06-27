@@ -1,9 +1,6 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using DogHouseServiceAPI.Middleware;
 using Microsoft.AspNetCore.Http;
-using Xunit;
+using System.Net;
 
 namespace DogHouseServiceAPI;
 

@@ -4,11 +4,7 @@ using DogHouseServiceAPI.Dto;
 using DogHouseServiceAPI.Models;
 using DogHouseServiceAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace DogHouseServiceAPI.Tests
 {
@@ -17,8 +13,8 @@ namespace DogHouseServiceAPI.Tests
     /// </summary>
     public class DogsControllerTests
     {
-        private DogsController _dogsController;
-        private Mock<IDogService> _dogServiceMock;
+        private readonly DogsController _dogsController;
+        private readonly Mock<IDogService> _dogServiceMock;
 
         /// <summary>
         /// Initializes instances and objects required to run unit tests on DogsController class.
@@ -56,11 +52,13 @@ namespace DogHouseServiceAPI.Tests
             // Arrange
             var request = new DogsGetRequest();
 
-            Dog dog = new Dog();
-            dog.Name = "Test DogTest Dog";
-            dog.Weight = 10;
-            dog.Color = "Brown";
-            dog.TailLength = 5;
+            Dog dog = new()
+            {
+                Name = "Test DogTest Dog",
+                Weight = 10,
+                Color = "Brown",
+                TailLength = 5
+            };
 
             _dogServiceMock.Setup(x => x.GetDogs(request)).Returns(await Task.FromResult<IEnumerable<Dog>>(new List<Dog> { dog }));
 

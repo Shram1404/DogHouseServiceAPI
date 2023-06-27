@@ -6,7 +6,7 @@ namespace DogHouseServiceAPI.Data
     {
         public virtual DbSet<DogHouseServiceAPI.Models.Dog> Dog { get; set; } = default!;
 
-        public DogHouseServiceAPIContext (DbContextOptions<DogHouseServiceAPIContext> options)
+        public DogHouseServiceAPIContext(DbContextOptions<DogHouseServiceAPIContext> options)
             : base(options)
         {
         }

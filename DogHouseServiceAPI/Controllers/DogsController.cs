@@ -20,8 +20,15 @@ namespace DogHouseServiceAPI.Controllers
         [HttpGet("Dogs")]
         public Task<IActionResult> GetDogs([FromQuery] DogsGetRequest request) // DogsGetRequest from Dto folder
         {
-            var dog = _dogService.GetDogs(request);
-
+            IEnumerable<Dog>? dog;
+            try
+            {
+                dog = _dogService.GetDogs(request);
+            }
+            catch (ArgumentException e)
+            {
+                return Task.FromResult<IActionResult>(BadRequest(e.Message));
+            }
             if (dog == null)
                 return Task.FromResult<IActionResult>(NotFound());
 

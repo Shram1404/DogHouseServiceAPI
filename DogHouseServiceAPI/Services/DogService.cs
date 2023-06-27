@@ -1,6 +1,8 @@
 ﻿using DogHouseServiceAPI.Data;
-using DogHouseServiceAPI.Models;
 using DogHouseServiceAPI.Dto;
+using DogHouseServiceAPI.Models;
+using System.Linq.Dynamic.Core;
+using System.Reflection;
 
 namespace DogHouseServiceAPI.Services
 {
@@ -17,25 +19,25 @@ namespace DogHouseServiceAPI.Services
         // Retrieve a list of dogs for the given request
         public IEnumerable<Dog>? GetDogs(DogsGetRequest request)
         {
-            var dogs = _context.Dog.AsQueryable();
+            IQueryable<Dog> dogs = _context.Dog.AsQueryable();
 
             // If request contains an attribute, sort accordingly
             if (!string.IsNullOrEmpty(request.Attribute))
             {
-                var descending = request.Order == "desc";
-                dogs = request.Attribute switch
-                {
-                    "name" => descending ? dogs.OrderByDescending(d => d.Name) : dogs.OrderBy(d => d.Name),
-                    "color" => descending ? dogs.OrderByDescending(d => d.Color) : dogs.OrderBy(d => d.Color),
-                    "tail_length" => descending ? dogs.OrderByDescending(d => d.TailLength) : dogs.OrderBy(d => d.TailLength),
-                    "weight" => descending ? dogs.OrderByDescending(d => d.Weight) : dogs.OrderBy(d => d.Weight),
-                    _ => dogs
-                };
-            }
+                bool descending = request.Order == "desc";
 
+                // Check if the requested attribute exists in the Dog class
+                PropertyInfo? attributeProperty = typeof(Dog).GetProperty(request.Attribute, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (attributeProperty != null)
+                {
+                    string orderByExpression = $"{request.Attribute} {(descending ? "descending" : "ascending")}";
+                    dogs = dogs.OrderBy(orderByExpression);
+                }
+                else throw new ArgumentException("Invalid attribute specified for dog sorting");
+            }
             // Paginate and return dogs
-            var pagedDogs = dogs.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize);
-            if (pagedDogs.Count() > 0)
+            IQueryable<Dog> pagedDogs = dogs.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize);
+            if (pagedDogs.Any())
                 return pagedDogs;
 
             return null;
